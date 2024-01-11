@@ -1,10 +1,12 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class BookStorePage {
   readonly page: Page;
+  readonly bookName: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.bookName = this.page.locator('//a[contains(text(),"Git Pocket Guide")]');
   }
 
   async navigateToBookStore() {
@@ -13,7 +15,7 @@ export class BookStorePage {
 
   async addBookToCollection() {
     try {
-      await this.page.click('//a[contains(text(),"Git Pocket Guide")]');
+      await this.bookName.click();
       await this.page.click('#addNewRecordButton');
       this.page.on('dialog', (dialog) => dialog.accept());
       await this.page.getByRole('button').click();

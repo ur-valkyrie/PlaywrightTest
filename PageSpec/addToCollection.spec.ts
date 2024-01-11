@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { loginFixture } from '../fixtures/loginFixture';
 import { bookStoreFixture } from '../fixtures/bookStoreFixture';
-import { profileFixture } from '../fixtures/profileFixture';
+import { profilePageFixture } from '../fixtures/profileFixture';
 
 test('Add book to collection and verify on Profile page', async ({ page }) => {
   try {
@@ -11,7 +11,7 @@ test('Add book to collection and verify on Profile page', async ({ page }) => {
     await bookStorePage.navigateToBookStore();
     await bookStorePage.addBookToCollection();
 
-    const profilePage = profileFixture(page);
+    const profilePage = await profilePageFixture(page);
     const isBookAdded = await profilePage.isBookAdded();
 
     expect(isBookAdded).toBeTruthy();
